@@ -7,6 +7,16 @@
 #include "lib.h"
 #include "syscall.h"
 
+int __uring_clz(unsigned int x)
+{
+	int i = sizeof (x) * 8;
+	while (x) {
+		x >>= 1;
+		i--;
+	}
+	return i;
+}
+
 void *__uring_memset(void *s, int c, size_t n)
 {
 	size_t i;
