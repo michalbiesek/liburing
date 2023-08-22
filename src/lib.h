@@ -10,6 +10,8 @@
 #include "arch/x86/lib.h"
 #elif defined(__aarch64__)
 #include "arch/aarch64/lib.h"
+#elif defined(__riscv) && __riscv_xlen == 64
+#include "arch/riscv64/lib.h"
 #else
 /*
  * We don't have nolibc support for this arch. Must use libc!
@@ -31,6 +33,16 @@
 	__typeof__(((TYPE *)0)->FIELD) *__FIELD_PTR = (PTR);	\
 	(TYPE *)((char *) __FIELD_PTR - offsetof(TYPE, FIELD));	\
 })
+#endif
+
+#ifndef __clz
+#ifdef __builtin_clz
+#define __clz(x)		__builtin_clz(x)
+#else
+unsigned int __uring_clz(unsigned int x);
+
+#define __clz(x)		__uring_clz(x)
+#endif
 #endif
 
 #define __maybe_unused		__attribute__((__unused__))

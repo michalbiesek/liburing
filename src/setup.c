@@ -15,7 +15,7 @@ static inline int __fls(int x)
 {
 	if (!x)
 		return 0;
-	return 8 * sizeof(x) - __builtin_clz(x);
+	return 8 * sizeof(x) - __clz(x);
 }
 
 static unsigned roundup_pow2(unsigned depth)
